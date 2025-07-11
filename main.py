@@ -2,7 +2,7 @@
 
 import csv
 
-print("Welcome to smartspendee!")
+print("Hello user, welcome to smartspendee!")
 
 csv_file: 'smartspendee.csv'
 
