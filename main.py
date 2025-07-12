@@ -11,13 +11,18 @@ csv_file = 'smartspendee.csv'
 print("Hello user, welcome to smartspendee!")
 
 while True:
-    print("1. Add a new expense")
-    print("2. View expenses")
-    print("3. Exit")
+    print("1. Add income")
+    print("2. Add a new expense")
+    print("3. View expenses")
+    print("4. Exit")
     
-    choice = input("Please select an option (1-3): ")
+    choice = input("Please select an option (1-4): ")
 
     if choice == '1':
+        income = float(input("Add monthly income/allowance: ")) #to be used for financial statistics
+        print(f"Logged ${income:.2f} monthly income!")
+
+    elif choice == '2':
         item = input("Enter the item: ")
 
         try:
@@ -37,11 +42,11 @@ while True:
         df = pd.DataFrame([record])
         df.to_csv(csv_file, mode ='a', header=not os.path.exists(csv_file), index=False)
 
-    elif choice == '2':
+    elif choice == '3':
         readFile = pd.read_csv(csv_file)
         print("Displaying all expenses... \n", readFile)
 
-    elif choice == '3':
+    elif choice == '4':
         print("Exiting the application. Goodbye!")
         break
 
