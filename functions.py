@@ -1,4 +1,4 @@
-#functions
+#functions stay in this file to neaten main program code
 
 import pandas as pd
 import os
