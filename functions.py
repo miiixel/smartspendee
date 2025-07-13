@@ -11,7 +11,7 @@ def addEditExpense():
         print("\n1. Add an expense\n2. Edit (delete) an expense\n3. Exit")
         
         try:
-            option = float(input("Select an option: "))
+            option = int(input("Select an option: "))
         except ValueError:
             print("Please enter a valid option.")
             continue
@@ -64,8 +64,17 @@ def addEditExpense():
         else:
             print("Invalid option, please try again.")
 
+def totalExpenses():
+    if os.path.exists(csv_file) and os.path.getsize(csv_file) > 0:
+        df = pd.read_csv(csv_file)
+        totalExpenses = df["Expense"].sum()
+        print(f"Total expenses this month is ${totalExpenses:.2f}")
+    
+    else:
+        print("No expense data to summarise")
 
 if __name__ == "__main__":
     addEditExpense()
+    totalExpenses()
 
 
