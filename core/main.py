@@ -1,25 +1,19 @@
-#main program file
-
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
 import os
 import functions
+import pandas as pd
 
-#initialise empty data list, and csv file path to write data
-userData = []
-csv_file = 'data\smartspendee.csv'
+csv_file = "data/smartspendee.csv"
+os.makedirs("data", exist_ok=True)
 
-#user menu
-print("\nHello user, welcome to smartspendee!\n")
+budget = float(input("Enter your budget which you aim to stick to: "))
 
 while True:
-    print("1. Add monthly income/allowance")
+    print("\n1. Add monthly income/allowance")
     print("2. Add or edit an expense")
     print("3. View expenses")
-    print("4. View statistics (Total Expenses)")
+    print("4. View budget statistics")
     print("5. Exit")
-    
+
     try:
         choice = int(input("\nPlease select an option (1-5): "))
     except ValueError:
@@ -27,18 +21,22 @@ while True:
         continue
 
     if choice == 1:
-        income = float(input("\nAdd monthly income/allowance: ")) #to be used for budgeting statistics
-        print(f"Logged ${income:.2f} monthly income!\n")
+        income = float(input("\nAdd monthly income/allowance: "))
+        print(f"Logged ${income:.2f} monthly income.\n")
 
     elif choice == 2:
-        functions.addEditExpense()
+        functions.addEditExpense(csv_file)
 
     elif choice == 3:
-        readFile = pd.read_csv(csv_file)
-        print("Displaying all expenses... \n", readFile)
+        if os.path.exists(csv_file):
+            df = pd.read_csv(csv_file)
+            print("Displaying all expenses... \n", df)
+        else:
+            print("No expenses recorded yet.")
 
     elif choice == 4:
-        functions.totalExpenses()
+        functions.viewExpenses(budget, csv_file)
+        functions.groupByCategory(csv_file)
 
     elif choice == 5:
         print("Exiting the application. Goodbye!")

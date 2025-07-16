@@ -1,18 +1,10 @@
-#functions stay in this file to neaten main program code
-
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
-import numpy as np
 
-userData = []
-csv_file = 'data\smartspendee.csv'
-
-
-def addEditExpense():
+def addEditExpense(csv_file):
     while True:
         print("\n1. Add an expense\n2. Edit (delete) an expense\n3. Exit")
-        
         try:
             option = int(input("Select an option: "))
         except ValueError:
@@ -20,15 +12,12 @@ def addEditExpense():
             continue
 
         if option == 1:
-            
             item = input("Enter the item: ")
-            
             try:
                 expense = float(input("Enter the expense details: "))
             except ValueError:
                 print("Invalid number for expense.")
                 continue
-            
             category = input("Enter the category: ")
 
             record = {
@@ -38,12 +27,15 @@ def addEditExpense():
             }
 
             df = pd.DataFrame([record])
-            df.to_csv(csv_file, mode ='a', header=not os.path.exists(csv_file), index=False)
+            df.to_csv(csv_file, mode='a', header=not os.path.exists(csv_file), index=False)
+            print(f"✅ Saved to {os.path.abspath(csv_file)}")
+            print("📄 Preview of file content:")
+            print(pd.read_csv(csv_file).tail())
+            print(f"Saved expense: {record}")
 
         elif option == 2:
             if os.path.exists(csv_file) and os.path.getsize(csv_file) > 0:
                 df = pd.read_csv(csv_file)
-
                 print("\nCurrent Expenses:")
                 print(df.to_string(index=True))
 
@@ -61,23 +53,40 @@ def addEditExpense():
                 print("No expenses recorded yet.")
 
         elif option == 3:
-            print("Exiting the application. Goodbye!")
+            print("Exiting the expense editor.")
             break
 
         else:
             print("Invalid option, please try again.")
 
-def totalExpenses():
+
+def viewExpenses(budget, csv_file):
     if os.path.exists(csv_file) and os.path.getsize(csv_file) > 0:
         df = pd.read_csv(csv_file)
         totalExpenses = df["Expense"].sum()
-        print(f"Total expenses this month is ${totalExpenses:.2f}")
-    
+        print(f"Total expenses this month is ${totalExpenses:.2f}")  # total expenses
+        remainingExpenses = budget - totalExpenses
+        print(f"Remaining expenses for the month is {remainingExpenses:.2f}")  # remaining expenses
     else:
         print("No expense data to summarise")
 
-if __name__ == "__main__":
-    addEditExpense()
-    totalExpenses()
 
+def groupByCategory(csv_file):
+    if os.path.exists(csv_file) and os.path.getsize(csv_file) > 0:
+        df = pd.read_csv(csv_file)
+        df["Category"] = df["Category"].str.strip().str.lower()
+        category_totals = df.groupby("Category")["Expense"].sum().sort_values(ascending=False)
 
+        print("\nExpense Breakdown by Category:")
+        print(category_totals.to_string())
+
+        # Optional: show pie chart
+        category_totals.plot.pie(
+            autopct="%1.1f%%", figsize=(6, 6), title="Expenses by Category"
+        )
+        plt.ylabel("")
+        plt.tight_layout()
+        plt.show()
+
+    else:
+        print("No expenses recorded yet.")
