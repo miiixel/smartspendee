@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -6,7 +6,7 @@ app = Flask(__name__)
 def home():
     return render_template("index.html")
 
-@app.route("/add-income")
+@app.route("/add-income", methods=['GET', 'POST'])
 def add_income():
     return "Add monthly income"
 
