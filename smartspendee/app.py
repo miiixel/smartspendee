@@ -8,7 +8,10 @@ def home():
 
 @app.route("/add-income", methods=['GET', 'POST'])
 def add_income():
-    return "Add monthly income"
+    if request.method == "POST":
+        income = request.form["income"]
+        return f"Income of {income} saved!"
+    return render_template("add-income.html")
 
 @app.route("/add-expense")
 def add_expense():
