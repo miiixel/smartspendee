@@ -1,18 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Add Income</title>
-</head>
+    <meta charset="UTF-8">
+    <title>Add Income | SmartSpendee</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
+        .menu-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 320px;
+            text-align: center;
+        }
+
+        .menu-container label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .menu-container input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .menu-container button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .menu-container button:hover {
+            background-color: #45a049;
+        }
+
+        .menu-container a {
+            display: block;
+            margin-top: 1rem;
+            color: #555;
+            text-decoration: none;
+        }
+
+        .menu-container h2 {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
 <body>
     <div class="menu-container">
-    <h2>Add Monthly Income</h2>
-    <form method="POST">
-        <label for="income">Enter Monthly Income ($):</label>
-        <input type="number" step="0.01" name="income" required>
-        <button type="submit">Submit</button>
-    </form>
-        <p><a href="{{ url_for('home') }}">← Back to Home</a></p>
+        <h2>Add Monthly Income</h2>
+        <form method="POST">
+            <label for="income">Enter Monthly Income ($):</label>
+            <input type="number" step="0.01" name="income" id="income" required>
+            <button type="submit">Submit</button>
+        </form>
+        <a href="{{ url_for('home') }}">← Back to Home</a>
     </div>
 </body>
 </html>

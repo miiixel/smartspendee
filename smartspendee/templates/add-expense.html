@@ -1,19 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Expense | SmartSpendee</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: bold;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        .form-container input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .form-container input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .form-container a {
+            display: block;
+            margin-top: 1rem;
+            text-align: center;
+            text-decoration: none;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form method="POST">
+            <label for="item">Item:</label>
+            <input type="text" name="item" id="item" required>
 
-<form method="POST">
-    <label>Item:</label><br>
-    <input type="text" name="item" required><br><br>
+            <label for="amount">Amount:</label>
+            <input type="number" name="amount" id="amount" step="0.01" required>
 
-    <label>Amount:</label><br>
-    <input type="number" name="amount" step="0.01" required><br><br>
+            <label for="category">Category:</label>
+            <input type="text" name="category" id="category" required>
 
-    <label>Category:</label><br>
-    <input type="text" name="category" required><br><br>
+            <input type="submit" value="Add Expense">
+        </form>
 
-    <input type="submit" value="Add Expense">
-</form>
-
-<br><br>
-    <a href="/">⬅ Back to Home</a>
-<html>
+        <a href="/">⬅ Back to Home</a>
+    </div>
+</body>
+</html>

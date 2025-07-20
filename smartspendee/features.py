@@ -35,7 +35,10 @@ def getExpenses():
     return df.to_dict(orient="records")
 
 def generate_pie_chart_by_category(output_path="static/pie_chart.png"):
-    
+    import matplotlib.pyplot as plt
+    import pandas as pd
+    import os
+
     csv_file = "data/smartspendee.csv"
 
     if not os.path.exists(csv_file) or os.path.getsize(csv_file) == 0:
@@ -46,10 +49,13 @@ def generate_pie_chart_by_category(output_path="static/pie_chart.png"):
     category_totals = df.groupby("Category")["Amount"].sum()
 
     plt.figure(figsize=(6, 6))
-    category_totals.plot.pie(autopct='%1.1f%%', startangle=90)
+    category_totals.plot.pie(
+        autopct=lambda p: f"${p * category_totals.sum() / 100:.2f}",
+        startangle=90
+    )
     plt.ylabel("")  # Hide y-label
     plt.title("Expenses by Category")
-    
+
     os.makedirs("static", exist_ok=True)
     plt.savefig(output_path)
     plt.close()

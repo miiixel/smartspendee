@@ -30,12 +30,7 @@ def add_expense():
 
 @app.route("/add-expense/confirm")
 def add_expense_confirm():
-    return '''
-        <h3>Expense saved!</h3>
-        <p>Would you like to add another expense?</p>
-        <a href="/add-expense">Add another expense</a><br>
-        <a href="/">Back to home page</a>
-    '''
+    return render_template("confirm-expenses.html")
 
 @app.route("/view-expense", methods=["GET"])
 def view_expense():
