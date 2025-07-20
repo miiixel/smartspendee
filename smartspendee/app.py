@@ -36,3 +36,13 @@ def add_expense_confirm():
         <a href="/add-expense">Add another expense</a><br>
         <a href="/">Back to home page</a>
     '''
+
+@app.route("/view-expense", methods=["GET"])
+def view_expense():
+    expenses = features.getExpenses()
+    chart_generated = features.generate_pie_chart_by_category()
+
+    if not expenses:
+        return "<h3>No expenses recorded yet.</h3><a href='/'>⬅ Back to Home</a>"
+
+    return render_template("view-expense.html", expenses=expenses, chart_url="/static/pie_chart.png")
